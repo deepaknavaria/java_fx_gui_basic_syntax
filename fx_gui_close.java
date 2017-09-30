@@ -17,21 +17,29 @@ import javafx.stage.Stage;
  *
  * @author issei
  */
-public class fx_gui_creating_alert_box extends Application {
-    
+public class fx_gui_close extends Application {
+
+    Stage window;
+
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Click Me!!");
-        
-        btn.setOnAction(e->alert.display("its is an alert","Alert window"));
-      
+        window = primaryStage;
+        Button btn = new Button("Click me!!");
+        btn.setOnAction(e -> closeprogram());
+
+        //window close request
+        window.setOnCloseRequest(e -> {
+            //consume holds the conditon for no in this method
+            e.consume();
+            closeprogram();
+        });
+
         StackPane root = new StackPane();
         root.getChildren().add(btn);
-        
+
         Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
+
+        primaryStage.setTitle("Close");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -42,5 +50,13 @@ public class fx_gui_creating_alert_box extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
+    private void closeprogram() {
+        // alert.display("Title","Are you sure you want to exit");
+        Boolean answer = confirmbox.display("Confirmation", "Sure you want to exit");
+        if (answer) {
+            window.close();
+        }
+    }
+
 }
